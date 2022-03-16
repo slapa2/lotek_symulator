@@ -7,7 +7,7 @@ BETTING_PRICE = 3
 DRAWS_PER_WEEK = 3
 
 
-def draw_six_numbers(all_numbers):
+def draw_six_numbers(all_numbers: list) -> set:
     """draw 6 numbers
 
     Args:
@@ -19,25 +19,26 @@ def draw_six_numbers(all_numbers):
     return set(random.sample(all_numbers, k=6))
 
 
-def draw_until_win(win_numbers):
+def draw_until_win(win_numbers: set, drawing_algoritm) -> int:
     """Simulate drows until draws numbers ar same as win numbers
 
     Args:
         win_numbers set: set of numbers you have to draw to win the game
+        drawing_algoritm function: algoritm to get random numbers
 
     Returns:
-        _type_: _description_
+        int: number of draws to win the game
     """
     counter = 0
     draw_numbers = set()
     while draw_numbers != win_numbers:
-        draw_numbers = draw_six_numbers(ALL_NUMBERS)
+        draw_numbers = drawing_algoritm(ALL_NUMBERS)
         counter += 1
     return counter
 
 
-def get_years(draws, draws_pre_week):
-    """Count how meny years it will teka to take number of drows
+def get_years(draws: int, draws_pre_week: int) -> int:
+    """Count how meny years it will take to take number of drows
 
     Args:
         draws int: number of drows
@@ -50,7 +51,7 @@ def get_years(draws, draws_pre_week):
     return weeks // 52
 
 
-def print_summary(counter):
+def print_summary(counter: int):
     """Print to console summary of gamne symulation
 
     Args:
@@ -62,8 +63,8 @@ total time was over {get_years(counter, DRAWS_PER_WEEK)} years''')
 
 
 def main():
-    """ main module function """
-    draws_to_won = draw_until_win(draw_six_numbers(ALL_NUMBERS))
+    wining_numbers = draw_six_numbers(ALL_NUMBERS)
+    draws_to_won = draw_until_win(wining_numbers, draw_six_numbers)
     print_summary(draws_to_won)
 
 if __name__ == '__main__':
